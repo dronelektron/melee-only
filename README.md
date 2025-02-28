@@ -14,3 +14,7 @@ Allows you to enable melee mode
 
 * Download latest [release](https://github.com/dronelektron/melee-only/releases)
 * Extract `plugins` folder to `addons/sourcemod` folder of your server
+
+### Console Variables
+
+* sm_meleeonly - Enable (1) or disable (0) melee mode [default: "0"]

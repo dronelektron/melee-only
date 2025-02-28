@@ -1,5 +1,8 @@
 #include <sourcemod>
 
+#include "modules/console-variable.sp"
+#include "modules/use-case.sp"
+
 public Plugin myinfo = {
     name = "Melee only",
     author = "Dron-elektron",
@@ -7,3 +10,7 @@ public Plugin myinfo = {
     version = "0.1.0",
     url = "https://github.com/dronelektron/melee-only"
 };
+
+public void OnPluginStart() {
+    Variable_Create();
+}
