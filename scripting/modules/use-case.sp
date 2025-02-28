@@ -9,7 +9,7 @@ void UseCase_MeleeMode_Toggle(bool enabled) {
 
     if (enabled) {
         StripPlayers();
-        RemoveAmmoBoxes();
+        RemoveDroppedAmmoBoxes();
     }
 
     Command_Drop_Toggle(enabled);
@@ -60,7 +60,7 @@ static bool HasMelee(int client) {
     return ammoType == INVALID_INDEX;
 }
 
-static void RemoveAmmoBoxes() {
+static void RemoveDroppedAmmoBoxes() {
     int entity = INVALID_INDEX;
 
     while (FindAmmoBox(entity)) {
