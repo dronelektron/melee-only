@@ -12,7 +12,7 @@ void UseCase_MeleeMode_Toggle(bool enabled) {
         RemoveAmmoBoxes();
     }
 
-    Command_DropAmmo_Toggle(enabled);
+    Command_Drop_Toggle(enabled);
     Event_PlayerSpawn_Toggle(enabled);
 }
 

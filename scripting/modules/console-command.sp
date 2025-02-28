@@ -1,11 +1,13 @@
-void Command_DropAmmo_Toggle(bool enabled) {
+void Command_Drop_Toggle(bool enabled) {
     if (enabled) {
-        AddCommandListener(OnDropAmmo, COMMAND_DROP_AMMO);
+        AddCommandListener(OnDrop, COMMAND_DROP);
+        AddCommandListener(OnDrop, COMMAND_DROP_AMMO);
     } else {
-        RemoveCommandListener(OnDropAmmo, COMMAND_DROP_AMMO);
+        RemoveCommandListener(OnDrop, COMMAND_DROP);
+        RemoveCommandListener(OnDrop, COMMAND_DROP_AMMO);
     }
 }
 
-static Action OnDropAmmo(int client, const char[] command, int args) {
+static Action OnDrop(int client, const char[] command, int args) {
     return Plugin_Stop;
 }
