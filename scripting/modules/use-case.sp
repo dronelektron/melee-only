@@ -11,6 +11,7 @@ void UseCase_MeleeMode_Toggle(bool enabled) {
         StripPlayers();
     }
 
+    Command_DropAmmo_Toggle(enabled);
     Event_PlayerSpawn_Toggle(enabled);
 }
 
