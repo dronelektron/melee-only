@@ -1,11 +1,14 @@
 #include <sourcemod>
 #include <sdktools>
 
+#include "melee-only/event"
 #include "melee-only/use-case"
 #include "melee-only/weapon"
 
 #include "modules/client.sp"
 #include "modules/console-variable.sp"
+#include "modules/event.sp"
+#include "modules/frame.sp"
 #include "modules/use-case.sp"
 #include "modules/weapon.sp"
 

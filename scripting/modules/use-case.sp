@@ -10,17 +10,19 @@ void UseCase_MeleeMode_Toggle(bool enabled) {
     if (enabled) {
         StripPlayers();
     }
+
+    Event_PlayerSpawn_Toggle(enabled);
 }
 
 static void StripPlayers() {
     for (int client = 1; client <= MaxClients; client++) {
         if (IsClientInGame(client)) {
-            StripPlayer(client);
+            UseCase_StripPlayer(client);
         }
     }
 }
 
-static void StripPlayer(int client) {
+void UseCase_StripPlayer(int client) {
     if (IsPlayerAlive(client)) {
         RemoveBullets(client);
         RemoveGrenades(client);

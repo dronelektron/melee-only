@@ -4,3 +4,4 @@
 #define _melee_only_use_case_included
 
 #define INVALID_INDEX -1
+#define INVALID_CLIENT 0
