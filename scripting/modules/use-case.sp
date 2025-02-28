@@ -9,6 +9,7 @@ void UseCase_MeleeMode_Toggle(bool enabled) {
 
     if (enabled) {
         StripPlayers();
+        RemoveDroppedWeapons();
         RemoveDroppedAmmoBoxes();
     }
 
@@ -58,6 +59,41 @@ static bool HasMelee(int client) {
     int ammoType = Weapon_GetPrimaryAmmoType(weapon);
 
     return ammoType == INVALID_INDEX;
+}
+
+static void RemoveDroppedWeapons() {
+    // Allies
+    RemoveDroppedWeaponsByClassName("weapon_garand");
+    RemoveDroppedWeaponsByClassName("weapon_thompson");
+    RemoveDroppedWeaponsByClassName("weapon_bar");
+    RemoveDroppedWeaponsByClassName("weapon_spring");
+    RemoveDroppedWeaponsByClassName("weapon_30cal");
+    RemoveDroppedWeaponsByClassName("weapon_bazooka");
+    // Axis
+    RemoveDroppedWeaponsByClassName("weapon_k98");
+    RemoveDroppedWeaponsByClassName("weapon_mp40");
+    RemoveDroppedWeaponsByClassName("weapon_mp44");
+    RemoveDroppedWeaponsByClassName("weapon_k98_scoped");
+    RemoveDroppedWeaponsByClassName("weapon_mg42");
+    RemoveDroppedWeaponsByClassName("weapon_pschreck");
+}
+
+static void RemoveDroppedWeaponsByClassName(const char[] className) {
+    int entity = INVALID_INDEX;
+
+    while (FindWeapon(entity, className)) {
+        int owner = GetEntPropEnt(entity, Prop_Send, "m_hOwnerEntity");
+
+        if (owner == INVALID_INDEX) {
+            RemoveEntity(entity);
+        }
+    }
+}
+
+static bool FindWeapon(int& entity, const char[] className) {
+    entity = FindEntityByClassname(entity, className);
+
+    return entity > INVALID_INDEX;
 }
 
 static void RemoveDroppedAmmoBoxes() {
