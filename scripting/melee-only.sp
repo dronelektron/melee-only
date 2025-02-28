@@ -1,7 +1,13 @@
 #include <sourcemod>
+#include <sdktools>
 
+#include "melee-only/use-case"
+#include "melee-only/weapon"
+
+#include "modules/client.sp"
 #include "modules/console-variable.sp"
 #include "modules/use-case.sp"
+#include "modules/weapon.sp"
 
 public Plugin myinfo = {
     name = "Melee only",

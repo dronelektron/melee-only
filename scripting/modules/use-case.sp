@@ -8,8 +8,27 @@ void UseCase_MeleeMode_Toggle(bool enabled) {
     g_meleeModeEnabled = enabled;
 
     if (enabled) {
-        PrintToServer("[DEBUG] Melee mode: enabled");
-    } else {
-        PrintToServer("[DEBUG] Melee mode: disabled");
+        StripPlayers();
     }
+}
+
+static void StripPlayers() {
+    for (int client = 1; client <= MaxClients; client++) {
+        if (IsClientInGame(client)) {
+            StripPlayer(client);
+        }
+    }
+}
+
+static void StripPlayer(int client) {
+    if (IsPlayerAlive(client)) {
+        RemoveBullets(client);
+    }
+}
+
+static void RemoveBullets(int client) {
+    Client_SetPrimaryClip(client, Slot_Primary, 0);
+    Client_SetPrimaryAmmo(client, Slot_Primary, 0);
+    Client_SetPrimaryClip(client, Slot_Secondary, 0);
+    Client_SetPrimaryAmmo(client, Slot_Secondary, 0);
 }
