@@ -23,6 +23,7 @@ static void StripPlayers() {
 static void StripPlayer(int client) {
     if (IsPlayerAlive(client)) {
         RemoveBullets(client);
+        RemoveGrenades(client);
     }
 }
 
@@ -31,4 +32,26 @@ static void RemoveBullets(int client) {
     Client_SetPrimaryAmmo(client, Slot_Primary, 0);
     Client_SetPrimaryClip(client, Slot_Secondary, 0);
     Client_SetPrimaryAmmo(client, Slot_Secondary, 0);
+}
+
+static void RemoveGrenades(int client) {
+    Client_RemoveWeapon(client, Slot_Grenade);
+
+    if (HasMelee(client)) {
+        return;
+    }
+
+    Client_RemoveWeapon(client, Slot_Melee); // Smoke grenade
+}
+
+static bool HasMelee(int client) {
+    int weapon = GetPlayerWeaponSlot(client, Slot_Melee);
+
+    if (weapon == INVALID_INDEX) {
+        return false;
+    }
+
+    int ammoType = Weapon_GetPrimaryAmmoType(weapon);
+
+    return ammoType == INVALID_INDEX;
 }

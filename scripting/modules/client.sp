@@ -20,6 +20,17 @@ void Client_SetPrimaryAmmo(int client, int slot, int ammo) {
     SetAmmo(client, ammo, ammoType);
 }
 
+void Client_RemoveWeapon(int client, int slot) {
+    int weapon = GetPlayerWeaponSlot(client, slot);
+
+    if (weapon == INVALID_INDEX) {
+        return;
+    }
+
+    RemovePlayerItem(client, weapon);
+    RemoveEntity(weapon);
+}
+
 static void SetAmmo(int client, int ammo, int ammoType) {
     SetEntProp(client, Prop_Send, "m_iAmmo", ammo, _, ammoType);
 }

@@ -5,5 +5,7 @@
 
 enum {
     Slot_Primary,
-    Slot_Secondary
+    Slot_Secondary,
+    Slot_Melee,
+    Slot_Grenade
 };
