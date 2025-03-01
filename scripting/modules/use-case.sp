@@ -82,9 +82,7 @@ static void RemoveDroppedWeaponsByClassName(const char[] className) {
     int entity = INVALID_INDEX;
 
     while (FindWeapon(entity, className)) {
-        int owner = GetEntPropEnt(entity, Prop_Send, "m_hOwnerEntity");
-
-        if (owner == INVALID_INDEX) {
+        if (Weapon_GetOwner(entity) == INVALID_INDEX) {
             RemoveEntity(entity);
         }
     }
