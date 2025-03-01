@@ -40,16 +40,14 @@ static void RemoveBullets(int client) {
 }
 
 static void RemoveGrenades(int client) {
-    Client_RemoveWeapon(client, Slot_Grenade);
-
-    if (HasMelee(client)) {
-        return;
+    if (HasSmokeGrenade(client)) {
+        Client_RemoveWeapon(client, Slot_Melee);
     }
 
-    Client_RemoveWeapon(client, Slot_Melee); // Smoke grenade
+    Client_RemoveWeapon(client, Slot_Grenade);
 }
 
-static bool HasMelee(int client) {
+static bool HasSmokeGrenade(int client) {
     int weapon = GetPlayerWeaponSlot(client, Slot_Melee);
 
     if (weapon == INVALID_INDEX) {
@@ -58,7 +56,7 @@ static bool HasMelee(int client) {
 
     int ammoType = Weapon_GetPrimaryAmmoType(weapon);
 
-    return ammoType == INVALID_INDEX;
+    return ammoType > INVALID_INDEX;
 }
 
 static void RemoveDroppedWeapons() {
