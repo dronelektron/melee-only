@@ -13,8 +13,9 @@ void UseCase_MeleeMode_Toggle(bool enabled) {
         RemoveDroppedAmmoBoxes();
     }
 
-    Command_Drop_Toggle(enabled);
+    Command_DropAmmo_Toggle(enabled);
     Event_PlayerSpawn_Toggle(enabled);
+    WeaponDrop_Toggle(enabled);
 }
 
 static void StripPlayers() {
@@ -92,4 +93,12 @@ static bool FindAmmoBox(int& entity) {
     entity = FindEntityByClassname(entity, "dod_ammo_box");
 
     return entity > INVALID_INDEX;
+}
+
+static void WeaponDrop_Toggle(bool enabled) {
+    for (int client = 1; client <= MaxClients; client++) {
+        if (IsClientInGame(client)) {
+            SdkHook_WeaponDrop_Toggle(client, enabled);
+        }
+    }
 }

@@ -1,5 +1,6 @@
 #include <sourcemod>
 #include <sdktools>
+#include <sdkhooks>
 
 #include "melee-only/console-command"
 #include "melee-only/event"
@@ -11,6 +12,7 @@
 #include "modules/console-variable.sp"
 #include "modules/event.sp"
 #include "modules/frame.sp"
+#include "modules/sdk-hook.sp"
 #include "modules/use-case.sp"
 #include "modules/weapon.sp"
 
@@ -24,4 +26,10 @@ public Plugin myinfo = {
 
 public void OnPluginStart() {
     Variable_Create();
+}
+
+public void OnClientPutInServer(int client) {
+    if (Variable_MeleeMode()) {
+        SdkHook_WeaponDrop_Toggle(client, ENABLED_YES);
+    }
 }
