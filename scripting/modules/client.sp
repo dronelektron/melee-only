@@ -31,6 +31,18 @@ void Client_RemoveWeapon(int client, int slot) {
     RemoveEntity(weapon);
 }
 
+bool Client_HasSmokeGrenade(int client) {
+    int weapon = GetPlayerWeaponSlot(client, Slot_Melee);
+
+    if (weapon == INVALID_INDEX) {
+        return false;
+    }
+
+    int ammoType = Weapon_GetPrimaryAmmoType(weapon);
+
+    return ammoType > INVALID_INDEX;
+}
+
 static void SetAmmo(int client, int ammo, int ammoType) {
     SetEntProp(client, Prop_Send, "m_iAmmo", ammo, _, ammoType);
 }

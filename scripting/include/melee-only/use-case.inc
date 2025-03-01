@@ -5,3 +5,5 @@
 
 #define INVALID_INDEX -1
 #define INVALID_CLIENT 0
+
+#define ENABLED_YES true

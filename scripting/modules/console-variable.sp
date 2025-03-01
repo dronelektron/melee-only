@@ -5,6 +5,10 @@ void Variable_Create() {
     g_meleeOnly.AddChangeHook(OnMeleeMode);
 }
 
+bool Variable_MeleeMode() {
+    return g_meleeOnly.BoolValue;
+}
+
 static void OnMeleeMode(ConVar variable, const char[] oldValue, const char[] newValue) {
     bool enabled = variable.BoolValue;
 

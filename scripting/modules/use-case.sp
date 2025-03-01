@@ -13,8 +13,9 @@ void UseCase_MeleeMode_Toggle(bool enabled) {
         RemoveDroppedAmmoBoxes();
     }
 
-    Command_Drop_Toggle(enabled);
+    Command_DropAmmo_Toggle(enabled);
     Event_PlayerSpawn_Toggle(enabled);
+    WeaponDrop_Toggle(enabled);
 }
 
 static void StripPlayers() {
@@ -40,25 +41,11 @@ static void RemoveBullets(int client) {
 }
 
 static void RemoveGrenades(int client) {
+    if (Client_HasSmokeGrenade(client)) {
+        Client_RemoveWeapon(client, Slot_Melee);
+    }
+
     Client_RemoveWeapon(client, Slot_Grenade);
-
-    if (HasMelee(client)) {
-        return;
-    }
-
-    Client_RemoveWeapon(client, Slot_Melee); // Smoke grenade
-}
-
-static bool HasMelee(int client) {
-    int weapon = GetPlayerWeaponSlot(client, Slot_Melee);
-
-    if (weapon == INVALID_INDEX) {
-        return false;
-    }
-
-    int ammoType = Weapon_GetPrimaryAmmoType(weapon);
-
-    return ammoType == INVALID_INDEX;
 }
 
 static void RemoveDroppedWeapons() {
@@ -82,9 +69,7 @@ static void RemoveDroppedWeaponsByClassName(const char[] className) {
     int entity = INVALID_INDEX;
 
     while (FindWeapon(entity, className)) {
-        int owner = GetEntPropEnt(entity, Prop_Send, "m_hOwnerEntity");
-
-        if (owner == INVALID_INDEX) {
+        if (Weapon_GetOwner(entity) == INVALID_INDEX) {
             RemoveEntity(entity);
         }
     }
@@ -108,4 +93,12 @@ static bool FindAmmoBox(int& entity) {
     entity = FindEntityByClassname(entity, "dod_ammo_box");
 
     return entity > INVALID_INDEX;
+}
+
+static void WeaponDrop_Toggle(bool enabled) {
+    for (int client = 1; client <= MaxClients; client++) {
+        if (IsClientInGame(client)) {
+            SdkHook_WeaponDrop_Toggle(client, enabled);
+        }
+    }
 }
